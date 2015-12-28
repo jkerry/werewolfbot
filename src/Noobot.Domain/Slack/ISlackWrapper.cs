@@ -14,5 +14,7 @@ namespace Noobot.Domain.Slack
         string GetUserIdForUsername(string username);
         string GetChannelId(string channelName);
         Dictionary<string, string> ListChannels();
+        Task CreateGameChannel();
+        Task CreateWerewolfGroup();
     }
 }

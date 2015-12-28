@@ -2,10 +2,16 @@
   "logFile": "log.txt",
   "adminPin":  0,
   "slack": {
-    "apiToken": ""
+    "apiToken": "",
+    "admin-apiToken": ""
+  },
+  "werewolf": {
+    "game-channel-name": "werewolf-game",
+    "werewolves-channel-name": "werewolves"
   },
   "flickr": {
     "apiKey": "",
     "apiSecret": ""
   }
 }
+

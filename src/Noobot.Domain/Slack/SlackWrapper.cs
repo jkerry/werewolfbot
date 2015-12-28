@@ -11,6 +11,7 @@ using Noobot.Domain.MessagingPipeline.Request.Extensions;
 using Noobot.Domain.MessagingPipeline.Response;
 using SlackConnector;
 using SlackConnector.Models;
+using System.Threading;
 
 namespace Noobot.Domain.Slack
 {
@@ -228,6 +229,50 @@ namespace Noobot.Domain.Slack
             }
 
             return chatHub;
+        }
+
+        public async Task CreateGameChannel()
+        {
+            AutoResetEvent callbackAwaiter = new AutoResetEvent(false);
+            JObject config = _configReader.GetConfig();
+            string adminSlackKey = config["slack"].Value<string>("admin-apiToken");
+            string gameChannelName = config["werewolf"].Value<string>("game-channel-name");
+            SlackAPI.SlackSocketClient client = new SlackAPI.SlackSocketClient(adminSlackKey);
+            client.Connect((connected) => {
+                client.GetGroupsList((channellist) => {
+                    if (!channellist.groups.Any(t => t.name == gameChannelName))
+                    {
+                        client.GroupsCreate((groupcreated) =>
+                        {
+                            groupcreated.AssertOk();
+                            callbackAwaiter.Set();
+                        }, gameChannelName);
+                    }
+                });
+            });
+            callbackAwaiter.WaitOne(15000);
+        }
+
+        public async Task CreateWerewolfGroup()
+        {
+            AutoResetEvent callbackAwaiter = new AutoResetEvent(false);
+            JObject config = _configReader.GetConfig();
+            string adminSlackKey = config["slack"].Value<string>("admin-apiToken");
+            string werewolvesChannelName = config["werewolf"].Value<string>("werewolves-channel-name");
+            SlackAPI.SlackSocketClient client = new SlackAPI.SlackSocketClient(adminSlackKey);
+            client.Connect((connected) => {
+                client.GetGroupsList((channellist) => {
+                    if (!channellist.groups.Any(t => t.name == werewolvesChannelName))
+                    {
+                        client.GroupsCreate((groupcreated) =>
+                        {
+                            groupcreated.AssertOk();
+                            callbackAwaiter.Set();
+                        }, werewolvesChannelName);
+                    }
+                });
+            });
+            callbackAwaiter.WaitOne(15000);
         }
     }
 }

@@ -62,6 +62,10 @@
       <HintPath>..\..\packages\RestSharp.105.2.3\lib\net452\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SlackAPI, Version=1.0.4.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SlackAPI.1.0.4.1\lib\net45\SlackAPI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SlackConnector, Version=3.0.5811.41364, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SlackConnector.3.0.5811.41364\lib\net45\SlackConnector.dll</HintPath>
       <Private>True</Private>
