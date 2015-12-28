@@ -10,10 +10,7 @@ namespace Noobot.Custom
             //Use<AutoResponderMiddleware>();
             Use<WelcomeMiddleware>();
             Use<JokeMiddleware>();
-            Use<YieldTestMiddleware>();
-            Use<PingMiddleware>();
-            Use<FlickrMiddleware>();
-            Use<CalculatorMiddleware>();
+            Use<StartGameMiddleware>();
         }
     }
 }
